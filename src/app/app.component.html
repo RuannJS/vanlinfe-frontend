@@ -12,11 +12,9 @@
         >
       </a>
       <button
-        data-collapse-toggle="navbar-default"
+        (click)="collapseNav(navbar)"
         type="button"
         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        aria-controls="navbar-default"
-        aria-expanded="false"
       >
         <span class="sr-only">Open main menu</span>
         <svg
@@ -35,35 +33,38 @@
           />
         </svg>
       </button>
-      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+      <div #navbar class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul
           class="font-medium flex flex-col gap-2 p-4 md:p-0 mt-4 rounded-lg bg-primary md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-primary"
         >
           <li>
             <a
+              (click)="collapseNav(navbar)"
               routerLink=""
               [routerLinkActive]="activeRouteClass"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="block py-2 px-3 font-semibold bg-secondary text-lightblack rounded md:bg-secondary md:px-4 md:py-2 md:text-lightblack md:p-0 hover:underline-offset-4 hover:underline"
+              class="block py-2 px-3 font-semibold text-lightblack rounded md:px-4 md:py-2 md:text-lightblack md:p-0 hover:underline-offset-4 hover:underline"
               >Home</a
             >
           </li>
           <li>
             <a
+              (click)="collapseNav(navbar)"
               routerLink="about"
               [routerLinkActive]="activeRouteClass"
               [routerLinkActiveOptions]="{ exact: true }"
               href="#"
-              class="block py-2 px-3 font-semibold bg-secondary text-lightblack rounded md:bg-secondary md:px-4 md:py-2 md:text-lightblack md:p-0 hover:underline-offset-4 hover:underline"
+              class="block py-2 px-3 font-semibold text-lightblack rounded md:px-4 md:py-2 md:text-lightblack md:p-0 hover:underline-offset-4 hover:underline"
               >About</a
             >
           </li>
           <li>
             <a
+              (click)="collapseNav(navbar)"
               routerLink="vans"
               [routerLinkActive]="activeRouteClass"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="block py-2 px-3 font-semibold bg-secondary text-lightblack rounded md:bg-secondary md:px-4 md:py-2 md:text-lightblack md:p-0 hover:underline-offset-4 hover:underline"
+              class="block py-2 px-3 font-semibold text-lightblack rounded md:px-4 md:py-2 md:text-lightblack md:p-0 hover:underline-offset-4 hover:underline"
               >Vans</a
             >
           </li>
@@ -71,4 +72,21 @@
       </div>
     </div>
   </nav>
+
+  <!-- ACTIVE ROUTE -->
+
+  <router-outlet></router-outlet>
+
+  <!-- FOOTER -->
+  <footer class="bg-lightblack">
+    <div
+      class="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-center"
+    >
+      <span class="text-sm text-center text-gray-300 sm:text-center"
+        >© 2023
+        <a href="https://flowbite.com/" class="hover:underline">#VANLIFE</a>.
+        All Rights Reserved.
+      </span>
+    </div>
+  </footer>
 </main>

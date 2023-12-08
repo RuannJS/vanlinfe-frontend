@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { initFlowbite } from 'flowbite';
+import { initFlowbite, Collapse } from 'flowbite';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +12,13 @@ export class AppComponent implements OnInit {
   }
 
   activeRouteClass = 'underline underline-offset-4';
+  expandNavbar = false;
+
+  collapseNav(target: HTMLDivElement) {
+    const collapse = new Collapse(target);
+
+    this.expandNavbar ? collapse.collapse() : collapse.expand();
+
+    this.expandNavbar = !this.expandNavbar;
+  }
 }

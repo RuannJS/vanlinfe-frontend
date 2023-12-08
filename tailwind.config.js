@@ -7,7 +7,7 @@ module.exports = {
     colors: {
       primary: "#FFF7ED",
       secondary: "#FFCC8D",
-      action: "FF8C38",
+      cta: "#FF8C38",
       lightblack: "#252525",
     },
     extend: {},
