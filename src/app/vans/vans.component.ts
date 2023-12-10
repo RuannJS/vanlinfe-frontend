@@ -12,12 +12,10 @@ import { ActivatedRoute, Params, Router, Routes } from '@angular/router';
 })
 export class VansComponent implements OnInit {
   constructor(
-    private readonly vans: VanService,
+    private readonly service: VanService,
     private readonly router: Router,
     private readonly route: ActivatedRoute
   ) {}
-
-  vanList$!: Observable<{ isLoading: boolean; results: undefined | Van[] }>;
 
   vanListView$!: Observable<{ isLoading: boolean; results: undefined | Van[] }>;
 
@@ -28,15 +26,17 @@ export class VansComponent implements OnInit {
     //Add 'implements OnInit' to the class.
 
     this.route.queryParams.subscribe((value) => (this.queryParam = value));
-    this.vanList$ = this.vans.getVanList();
 
     if (this.queryParam?.['type'] === undefined) {
-      this.vanListView$ = this.vanList$;
+      this.vanListView$ = this.service.getVanList().pipe(
+        map((value) => ({ isLoading: false, results: value })),
+        startWith({ isLoading: true, results: undefined })
+      );
     } else {
-      this.vanListView$ = this.vanListView$ = this.vanList$.pipe(
+      this.vanListView$ = this.service.getVanList().pipe(
         map((value) => ({
           isLoading: false,
-          results: value.results?.filter(
+          results: value.filter(
             (vans) => vans.type === this.queryParam?.['type']
           ),
         })),
@@ -45,13 +45,13 @@ export class VansComponent implements OnInit {
     }
   }
 
-  async filterVans(type: string) {
-    await this.router.navigate(['vans'], { queryParams: { type } });
+  filterVans(type: string) {
+    this.router.navigate(['vans'], { queryParams: { type } });
 
-    this.vanListView$ = this.vanList$.pipe(
+    this.vanListView$ = this.service.getVanList().pipe(
       map((value) => ({
         isLoading: false,
-        results: value.results?.filter(
+        results: value.filter(
           (vans) => vans.type === this.queryParam?.['type']
         ),
       })),
@@ -62,6 +62,9 @@ export class VansComponent implements OnInit {
   clearFilter() {
     this.router.navigate(['vans']);
 
-    this.vanListView$ = this.vanList$;
+    this.vanListView$ = this.service.getVanList().pipe(
+      map((value) => ({ isLoading: false, results: value })),
+      startWith({ isLoading: true, results: undefined })
+    );
   }
 }
