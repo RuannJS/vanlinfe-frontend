@@ -9,6 +9,9 @@ export interface Van {
   price: number;
   name: string;
   type: VanType;
-  hostId: string;
+  description: string;
+  host: {
+    name: string;
+  };
   imageUrl: string;
 }

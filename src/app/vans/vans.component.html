@@ -1,6 +1,44 @@
-<section class="bg-primary flex justify-center">
+<section class="bg-secondary pt-5">
   <div
-    *ngIf="vanList$ | async as vans"
+    *ngIf="vanListView$ | async as vans"
+    class="flex flex-col justify-center p-5"
+  >
+    <h1 class="text-5xl text-lightblack font-bold mb-5 flex justify-center">
+      Explore our options
+    </h1>
+    <div *ngIf="!vans.isLoading" class="px-10 flex flex-row justify-center">
+      <button
+        (click)="filterVans('simple')"
+        type="button"
+        class="focus:outline-none text-orange-600 font-black bg-primary hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 rounded-lg text-base px-5 py-2.5 me-2 mb-2"
+      >
+        Simple
+      </button>
+      <button
+        (click)="filterVans('rugged')"
+        type="button"
+        class="focus:outline-none text-green-500 font-black bg-green-200 hover:bg-green-700 focus:ring-4 focus:ring-green-300 rounded-lg text-base px-5 py-2.5 me-2 mb-2"
+      >
+        Rugged
+      </button>
+      <button
+        (click)="filterVans('luxury')"
+        type="button"
+        class="focus:outline-none text-white font-black bg-lightblack hover:bg-black focus:ring-4 focus:ring-lightblack rounded-lg text-base px-5 py-2.5 me-2 mb-2"
+      >
+        Luxury
+      </button>
+    </div>
+    <div
+      (click)="clearFilter()"
+      class="flex justify-center mb-5 underline-offset-4 underline text-lightblack cursor-pointer"
+    >
+      Clear Filter
+    </div>
+  </div>
+
+  <div
+    *ngIf="vanListView$ | async as vans"
     class="flex flex-col md:flex-row md:flex-wrap md:justify-evenly"
   >
     <!-- IS LOADING STATE -->
@@ -30,7 +68,7 @@
 
     <div
       *ngFor="let van of vans.results"
-      class="max-w-sm bg-white border border-gray-200 rounded-lg shadow mb-5"
+      class="max-w-sm bg-white border border-gray-200 rounded-lg shadow mb-5 mx-5 ml-10"
     >
       <a class="" [routerLink]="van.id">
         <img class="rounded-t-lg" [src]="van.imageUrl" [alt]="van.name" />
@@ -47,7 +85,7 @@
           <button
             *ngIf="van.type === 'simple'"
             type="button"
-            class="focus:outline-none text-orange-600 font-black bg-secondary hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+            class="focus:outline-none text-orange-600 font-black bg-primary hover:bg-orange-500 focus:ring-4 focus:ring-orange-300 rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
           >
             {{ van.type | capitalize }}
           </button>
@@ -69,6 +107,10 @@
           >
             {{ van.type | capitalize }}
           </button>
+
+          <span class="mb-2 text-sm font-bold tracking-tight text-lightblack">
+            Host: {{ van.host.name | capitalize }}
+          </span>
         </div>
         <div class="flex flex-col">
           <span class="text-4xl font-black text-lightblack"

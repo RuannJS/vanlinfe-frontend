@@ -9,15 +9,23 @@ import { VansComponent } from './vans/vans.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CapitalizePipe } from './util/pipes/capitalize.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AboutComponent, VansComponent, CapitalizePipe],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    AboutComponent,
+    VansComponent,
+    CapitalizePipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     CommonModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
