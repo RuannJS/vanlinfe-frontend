@@ -4,6 +4,10 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { VansComponent } from './vans/vans.component';
 import { VanIDComponent } from './van-id/van-id.component';
+import { SigninComponent } from './signin/signin.component';
+import { ProfileComponent } from './profile/profile.component';
+import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.component';
+import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
 
 const routes: Routes = [
   {
@@ -25,6 +29,29 @@ const routes: Routes = [
     path: 'vans/:id',
     component: VanIDComponent,
     title: 'Van Details',
+  },
+  {
+    path: 'signin',
+    component: SigninComponent,
+    title: 'Sign in to #VanLife',
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    title: 'Your Profile',
+    children: [
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        title: 'Host Dashboard',
+      },
+
+      {
+        path: 'vans',
+        component: HostvansComponent,
+        title: 'Host Vans',
+      },
+    ],
   },
 ];
 

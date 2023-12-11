@@ -18,16 +18,21 @@ export class VanIDComponent implements OnInit {
   ) {}
 
   vanID!: string | null;
+  token!: string | null;
 
   vanDetails$!: Observable<{ isLoading: boolean; result: Van | undefined }>;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((value) => (this.vanID = value.get('id')));
 
-    this.vanDetails$ = this.service.getVanByID(this.vanID).pipe(
-      map((van) => ({ isLoading: false, result: van })),
-      startWith({ isLoading: true, result: undefined })
-    );
+    this.token = localStorage.getItem('token');
+
+    if (this.token !== null) {
+      this.vanDetails$ = this.service.getVanByID(this.vanID, this.token).pipe(
+        map((van) => ({ isLoading: false, result: van })),
+        startWith({ isLoading: true, result: undefined })
+      );
+    }
   }
 
   goBack() {

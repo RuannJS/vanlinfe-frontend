@@ -1,0 +1,24 @@
+<section class="bg-secondary p-5">
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <span
+      *ngIf="email?.invalid && (email?.dirty || email?.touched || isSubmitted)"
+      >Invalid email</span
+    >
+    <label for="email"> Email </label>
+    <input id="email" formControlName="email" type="text" />
+
+    <br />
+
+    <span
+      *ngIf="
+        password?.invalid &&
+        (password?.dirty || password?.touched || isSubmitted)
+      "
+      >Invalid password</span
+    >
+    <label for="password">Password</label>
+    <input formControlName="password" type="password" />
+
+    <button type="submit">submit</button>
+  </form>
+</section>

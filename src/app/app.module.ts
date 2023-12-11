@@ -8,9 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { VansComponent } from './vans/vans.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { CapitalizePipe } from './util/pipes/capitalize.pipe';
+import { CapitalizePipe } from './util/pipes/capitalize/capitalize.pipe';
 import { RouterModule } from '@angular/router';
 import { VanIDComponent } from './van-id/van-id.component';
+import { SigninComponent } from './signin/signin.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileComponent } from './profile/profile.component';
+import { PasswordPipe } from './util/pipes/password/password.pipe';
+import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.component';
+import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +26,17 @@ import { VanIDComponent } from './van-id/van-id.component';
     VansComponent,
     CapitalizePipe,
     VanIDComponent,
+    SigninComponent,
+    ProfileComponent,
+    PasswordPipe,
+    DashboardComponent,
+    HostvansComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
     RouterModule,

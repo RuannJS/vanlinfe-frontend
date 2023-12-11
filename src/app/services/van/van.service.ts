@@ -15,13 +15,24 @@ export class VanService {
     return this.http.get<Van[]>(this.VANLIST_URL);
   }
 
-  private VAN_URL = `http://localhost:3000/vans/`;
+  private VAN_URL = `http://localhost:3000/vans/van/`;
 
-  getVanByID(id: string | null): Observable<Van> {
+  // authorization will come from sessionStorage
+
+  getVanByID(id: string | null, token: string): Observable<Van> {
     return this.http.get<Van>(`${this.VAN_URL}${id}`, {
       headers: {
-        authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiQ09OU1VNRVIiLCJlbWFpbCI6ImNvbnN1bWVyQGNvbnN1bWVyLmNvbSIsImlhdCI6MTcwMjI1NzQzNH0.XLNf0dHHH_TEToF4z5IYhGU-SP8r0dTgLm9jiAtzz_8',
+        authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  private HOST_VAN_URL = 'http://localhost:3000/vans/host-vans';
+
+  listHostVans(token: string): Observable<Van[]> {
+    return this.http.get<Van[]>(this.HOST_VAN_URL, {
+      headers: {
+        authorization: `Bearer ${token}`,
       },
     });
   }
