@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { CapitalizePipe } from './util/pipes/capitalize.pipe';
 import { RouterModule } from '@angular/router';
+import { VanIDComponent } from './van-id/van-id.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RouterModule } from '@angular/router';
     AboutComponent,
     VansComponent,
     CapitalizePipe,
+    VanIDComponent,
   ],
   imports: [
     BrowserModule,
