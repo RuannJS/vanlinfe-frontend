@@ -1,5 +1,5 @@
-<section class="bg-secondary p-5 md:py-20 flex justify-center">
-  <div *ngIf="userInfo$ | async as user" class="">
+<section class="bg-secondary p-5 md:py-20 flex justify-center w-full">
+  <div *ngIf="userInfo$ | async as user" class="text-center">
     <!-- USER NOT LOADED -->
 
     <div *ngIf="user.isLoading" class="">
@@ -31,7 +31,7 @@
       </h5>
 
       <div
-        class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-xl shadow-black"
+        class="max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow-xl shadow-black ml-10"
       >
         <!-- CARD ICON -->
         <svg
@@ -114,7 +114,7 @@
       </h5>
       <!-- HOST INFORMATION -->
       <div
-        class="max-w-md p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow-xl shadow-black"
+        class="max-w-lg p-6 mb-10 bg-white border border-gray-200 rounded-lg shadow-xl shadow-black"
       >
         <!-- CARD ICON -->
         <svg
@@ -189,17 +189,17 @@
       </div>
 
       <!-- HOST NAVIGATION BAR -->
-      <nav>
+      <nav class="mt-24">
         <div class="max-w-screen-xl flex flex-wrap items-center gap-5 mx-auto">
           <button
-            class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-lg px-5 py-2.5 text-center me-2 mb-2"
             routerLink="dashboard"
             [routerLinkActive]="activeRoute"
           >
             Dashboard
           </button>
           <button
-            class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+            class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-lg px-5 py-2.5 text-center me-2 mb-2"
             routerLink="vans"
             [routerLinkActive]="activeRoute"
           >

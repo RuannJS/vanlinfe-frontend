@@ -36,4 +36,21 @@ export class VanService {
       },
     });
   }
+
+  private EDIT_VAN_URL = 'http://localhost:3000/vans/update/';
+
+  updateVan(
+    vanID: string,
+    token: string,
+    name: string | null | undefined,
+    price: number | null | undefined,
+    description: string | null | undefined
+  ): Observable<Van> {
+    return this.http.put<Van>(
+      `${this.EDIT_VAN_URL}${vanID}`,
+
+      { name, price, description },
+      { headers: { authorization: `Bearer ${token}` } }
+    );
+  }
 }
