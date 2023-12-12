@@ -4,6 +4,7 @@ import { Observable, map, startWith } from 'rxjs';
 import { Van } from 'src/app/util/van.interface';
 import { Modal, ModalOptions } from 'flowbite';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-hostvans',
@@ -13,10 +14,16 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class HostvansComponent implements OnInit {
   constructor(
     private readonly vanService: VanService,
+    private readonly location: Location,
     private readonly fb: FormBuilder
   ) {}
 
-  // EDIT MODAL
+  // VANS
+
+  hostVans$!: Observable<{ isLoading: boolean; result: Van[] | undefined }>;
+  token!: string | null;
+
+  //                         MODAL OPTIONS
 
   options: ModalOptions = {
     placement: 'top-center',
@@ -32,10 +39,18 @@ export class HostvansComponent implements OnInit {
 
   showModal: boolean = false;
 
+  //                          MODAL FORM
+
+  editedVan$!: Observable<Van>;
   selectedVan!: Van;
+  wasUpdated: boolean = false;
+  updateError: boolean = false;
 
   editVanForm = this.fb.group({
-    name: ['', [Validators.required]],
+    name: [
+      { value: '', disabled: this.wasUpdated || this.updateError },
+      [Validators.required],
+    ],
     price: [0, [Validators.required, Validators.min(1)]],
     description: ['', [Validators.required]],
   });
@@ -46,18 +61,10 @@ export class HostvansComponent implements OnInit {
 
   isSubmitted = false;
 
-  // VANS
-
-  hostVans$!: Observable<{ isLoading: boolean; result: Van[] | undefined }>;
-  token!: string | null;
-
-  // EDIT VAN
-
-  editedVan$!: Observable<Van>;
-
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
 
+    // HOST VANS LIST
     if (this.token !== null) {
       this.hostVans$ = this.vanService.listHostVans(this.token).pipe(
         map((value) => ({ isLoading: false, result: value })),
@@ -65,6 +72,8 @@ export class HostvansComponent implements OnInit {
       );
     }
   }
+
+  // TOGGLE EDIT MODAL
 
   toggleModal(element: HTMLDivElement, van?: Van) {
     const modal = new Modal(element, this.options, {
@@ -85,9 +94,15 @@ export class HostvansComponent implements OnInit {
       modal.hide();
     } else {
       modal.show();
+      if (van !== undefined) {
+        this.name?.setValue(van.name);
+        this.description?.setValue(van.description);
+        this.price?.setValue(van.price);
+      }
     }
   }
 
+  // SUBMIT MODAL FORM
   onSubmit() {
     this.isSubmitted = true;
 
@@ -100,7 +115,20 @@ export class HostvansComponent implements OnInit {
           this.price?.value,
           this.description?.value
         )
-        .subscribe();
+        .subscribe((value) => {
+          if (value) {
+            this.wasUpdated = true;
+
+            setTimeout(() => {
+              this.location.historyGo(0);
+            }, 1500);
+          } else {
+            this.updateError = true;
+            setTimeout(() => {
+              this.location.historyGo(0);
+            }, 1500);
+          }
+        });
     }
 
     return;
