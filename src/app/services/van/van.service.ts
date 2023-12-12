@@ -17,8 +17,6 @@ export class VanService {
 
   private VAN_URL = `http://localhost:3000/vans/van/`;
 
-  // authorization will come from sessionStorage
-
   getVanByID(id: string | null, token: string): Observable<Van> {
     return this.http.get<Van>(`${this.VAN_URL}${id}`, {
       headers: {
@@ -37,6 +35,29 @@ export class VanService {
     });
   }
 
+  private ADD_VAN_URL = 'http://localhost:3000/vans/add';
+
+  addVan(
+    token: string,
+    name: string | null | undefined,
+    price: number | null | undefined,
+    description: string | null | undefined,
+    type: string | null | undefined,
+    imageUrl: string
+  ): Observable<Van> {
+    return this.http.post<Van>(
+      this.ADD_VAN_URL,
+      {
+        name,
+        price,
+        description,
+        type,
+        imageUrl,
+      },
+      { headers: { authorization: `Bearer ${token}` } }
+    );
+  }
+
   private EDIT_VAN_URL = 'http://localhost:3000/vans/update/';
 
   updateVan(
@@ -52,5 +73,13 @@ export class VanService {
       { name, price, description },
       { headers: { authorization: `Bearer ${token}` } }
     );
+  }
+
+  private DELETE_VAN_URL = 'http://localhost:3000/vans/delete/';
+
+  deleteVan(vanID: string, token: string): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.DELETE_VAN_URL}${vanID}`, {
+      headers: { authorization: `Bearer ${token}` },
+    });
   }
 }

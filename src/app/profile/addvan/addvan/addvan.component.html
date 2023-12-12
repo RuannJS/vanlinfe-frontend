@@ -1,0 +1,166 @@
+<div class="bg-primary rounded-lg p-5">
+  <h5 class="text-2xl font-black text-lightblack tracking-tight mb-5">
+    Add a new Van
+  </h5>
+  <form [formGroup]="vanForm" (ngSubmit)="onSubmit()" class="max-w-sm mx-auto">
+    <div class="mb-5">
+      <span
+        *ngIf="name?.invalid && (name?.touched || name?.dirty || isSubmitted)"
+        class="text-lg text-red-500 font-semibold"
+        >Invalid name</span
+      >
+      <label for="name" class="block mb-2 text-sm font-medium text-gray-900">
+        Name</label
+      >
+      <input
+        formControlName="name"
+        type="text"
+        id="name"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
+        placeholder="Ex: Mocking Bird"
+      />
+    </div>
+    <div class="mb-5">
+      <span
+        *ngIf="
+          price?.invalid && (price?.touched || price?.dirty || isSubmitted)
+        "
+        class="text-lg text-red-500 font-semibold"
+        >Invalid price</span
+      >
+      <label for="price" class="block mb-2 text-sm font-medium text-gray-900">
+        Price</label
+      >
+      <input
+        formControlName="price"
+        placeholder="$100"
+        type="number"
+        id="price"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
+      />
+    </div>
+
+    <div class="mb-5">
+      <span
+        *ngIf="
+          description?.invalid &&
+          (description?.touched || description?.dirty || isSubmitted)
+        "
+        class="text-lg text-red-500 font-semibold"
+        >Invalid description</span
+      >
+      <label
+        for="description"
+        class="block mb-2 text-sm font-medium text-gray-900"
+      >
+        Description</label
+      >
+
+      <input
+        formControlName="description"
+        placeholder="Lorem, ipsum dolor sit amet consectetur adipisicing elit."
+        type="text"
+        id="description"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
+      />
+    </div>
+
+    <div class="mb-5">
+      <label for="type" class="block mb-2 text-sm font-medium text-gray-900">
+        Type</label
+      >
+      <select
+        formControlName="type"
+        id="countries"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
+      >
+        <option [ngValue]="type" *ngFor="let type of vanType">
+          {{ type | capitalize }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-5">
+      <span
+        *ngIf="!selectedImage.isSelected && isSubmitted"
+        class="text-lg text-red-500 font-semibold"
+        >Please choose a image</span
+      >
+      <label
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        for="user_avatar"
+      >
+        Image</label
+      >
+      <input
+        (change)="selectFile($event)"
+        accept="image/*"
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+        aria-describedby="user_avatar_help"
+        id="user_avatar"
+        type="file"
+      />
+
+      <div class="mb-5 mt-5 flex justify-center">
+        <img
+          class="w-48 rounded-lg h-auto"
+          *ngIf="selectedImage.isSelected"
+          [src]="selectedImage.image"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="text-white bg-cta hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+    >
+      Submit
+    </button>
+  </form>
+
+  <!-- ALERTS -->
+
+  <!-- SUCCESS -->
+  <div
+    [ngClass]="wasCreated ? 'block' : 'hidden'"
+    class="flex items-center p-4 mb-4 mt-5 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+    role="alert"
+  >
+    <svg
+      class="flex-shrink-0 inline w-4 h-4 me-3"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+      />
+    </svg>
+    <span class="sr-only">Info</span>
+    <div><span class="font-medium">Success!</span> Your van was created!</div>
+  </div>
+
+  <!-- ERROR -->
+
+  <div
+    [ngClass]="createError ? 'block' : 'hidden'"
+    class="flex items-center p-4 mb-4 mt-5 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+    role="alert"
+  >
+    <svg
+      class="flex-shrink-0 inline w-4 h-4 me-3"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+      />
+    </svg>
+    <span class="sr-only">Info</span>
+    <div><span class="font-medium">Error alert!</span> Please try again.</div>
+  </div>
+</div>

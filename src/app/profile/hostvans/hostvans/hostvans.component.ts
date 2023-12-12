@@ -102,8 +102,8 @@ export class HostvansComponent implements OnInit {
     }
   }
 
-  // SUBMIT MODAL FORM
-  onSubmit() {
+  // SUBMIT EDIT FORM
+  onEditSubmit() {
     this.isSubmitted = true;
 
     if (this.editVanForm.valid && this.token !== null) {
@@ -132,5 +132,60 @@ export class HostvansComponent implements OnInit {
     }
 
     return;
+  }
+
+  // DELETE MODAL
+
+  toggleDeleteModal: boolean = false;
+
+  deleteError: boolean = false;
+  wasDeleted: boolean = false;
+
+  deleteOptions: ModalOptions = {
+    placement: 'center',
+    backdrop: 'static',
+    closable: false,
+    onHide: () => {
+      this.toggleDeleteModal = !this.toggleDeleteModal;
+    },
+
+    onShow: () => {
+      this.toggleDeleteModal = !this.toggleDeleteModal;
+    },
+  };
+
+  showDeleteModal(element: HTMLDivElement, van?: Van) {
+    const deleteModal = new Modal(element, this.deleteOptions, {
+      id: 'delete-modal',
+      override: true,
+    });
+
+    if (van !== undefined) {
+      this.selectedVan = van;
+    }
+
+    this.toggleDeleteModal ? deleteModal.hide() : deleteModal.show();
+  }
+
+  onDelete() {
+    if (this.token !== null) {
+      this.vanService
+        .deleteVan(this.selectedVan.id, this.token)
+        .subscribe((value) => {
+          if (value) {
+            this.wasDeleted = true;
+
+            setTimeout(() => {
+              this.location.historyGo(0);
+            }, 1500);
+          } else {
+            this.deleteError = true;
+
+            setTimeout(() => {
+              this.location.historyGo(0);
+            }, 1500);
+          }
+        });
+    }
   }
 }

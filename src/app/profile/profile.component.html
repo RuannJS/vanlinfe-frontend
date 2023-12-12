@@ -190,7 +190,9 @@
 
       <!-- HOST NAVIGATION BAR -->
       <nav class="mt-24">
-        <div class="max-w-screen-xl flex flex-wrap items-center gap-5 mx-auto">
+        <div
+          class="max-w-screen-xl flex flex-wrap items-center mx-auto md:gap-2"
+        >
           <button
             class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-lg px-5 py-2.5 text-center me-2 mb-2"
             routerLink="dashboard"
@@ -198,12 +200,21 @@
           >
             Dashboard
           </button>
+
+          <button
+            class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-lg px-5 py-2.5 text-center me-2 mb-2"
+            routerLink="add-van"
+            [routerLinkActive]="activeRoute"
+          >
+            Add Van
+          </button>
+
           <button
             class="text-white bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 font-medium rounded-lg text-lg px-5 py-2.5 text-center me-2 mb-2"
             routerLink="vans"
             [routerLinkActive]="activeRoute"
           >
-            Vans
+            Van List
           </button>
         </div>
       </nav>

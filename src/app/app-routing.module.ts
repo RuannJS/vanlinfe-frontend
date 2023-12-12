@@ -8,6 +8,7 @@ import { SigninComponent } from './signin/signin.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.component';
 import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
+import { AddvanComponent } from './profile/addvan/addvan/addvan.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,11 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
         title: 'Host Dashboard',
+      },
+      {
+        path: 'add-van',
+        component: AddvanComponent,
+        title: 'Add a Van',
       },
 
       {
