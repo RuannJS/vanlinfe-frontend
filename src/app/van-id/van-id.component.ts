@@ -24,6 +24,7 @@ export class VanIDComponent implements OnInit {
   isLoading = false;
   backendError = false;
   isRented = false;
+  errorMessage!: string;
 
   vanDetails$!: Observable<{ isLoading: boolean; result: Van | undefined }>;
 
@@ -48,6 +49,11 @@ export class VanIDComponent implements OnInit {
         error: (err: HttpErrorResponse) => {
           this.isLoading = false;
           this.backendError = true;
+          this.errorMessage = 'Please Try again';
+
+          if (err.status === 403) {
+            this.errorMessage = "Host accounts can't rent vans";
+          }
         },
         next: (value) => {
           this.isRented = true;

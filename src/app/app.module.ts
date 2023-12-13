@@ -19,6 +19,7 @@ import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.comp
 import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
 import { AddvanComponent } from './profile/addvan/addvan/addvan.component';
 import { SignupComponent } from './signup/signup.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SignupComponent } from './signup/signup.component';
     HostvansComponent,
     AddvanComponent,
     SignupComponent,
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,

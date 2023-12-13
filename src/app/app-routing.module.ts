@@ -10,6 +10,8 @@ import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.comp
 import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
 import { AddvanComponent } from './profile/addvan/addvan/addvan.component';
 import { SignupComponent } from './signup/signup.component';
+import { userGuard } from './guards/user.guard';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,7 @@ const routes: Routes = [
     path: 'vans/:id',
     component: VanIDComponent,
     title: 'Van Details',
+    canActivate: [userGuard],
   },
   {
     path: 'signin',
@@ -46,6 +49,8 @@ const routes: Routes = [
     path: 'profile',
     component: ProfileComponent,
     title: 'Your Profile',
+    canActivate: [userGuard],
+    canActivateChild: [userGuard],
     children: [
       {
         path: 'dashboard',
@@ -64,6 +69,11 @@ const routes: Routes = [
         title: 'Host Vans',
       },
     ],
+  },
+  {
+    path: '**',
+    component: NotfoundComponent,
+    title: 'Oops!',
   },
 ];
 

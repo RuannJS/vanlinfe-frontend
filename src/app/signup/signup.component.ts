@@ -39,13 +39,13 @@ export class SignupComponent {
 
   onSubmit() {
     this.isSubmitted = true;
-    this.isLoading = true;
 
     // RESET STATES
     this.backendError = false;
     this.userCreated = false;
 
     if (this.signupForm.valid) {
+      this.isLoading = true;
       this.userService
         .userSignup(
           this.name?.value,
