@@ -59,10 +59,32 @@
 
         <!-- LOADED -->
 
-        <div class="flex flex-row flex-wrap gap-y-5" *ngIf="!vans.isLoading">
-          <span class="font-normal text-2xl text-gray-700 0 mb-5">
-            You have: {{ vans.result?.length }} vans available
-          </span>
+        <div class="flex flex-col flex-wrap gap-y-5" *ngIf="!vans.isLoading">
+          <div class="flex flex-row items-center">
+            <span class="font-normal text-2xl text-gray-700 0 mb-5">
+              You have a total of:
+              <span class="text-3xl font-bold text-lightblack">
+                {{ vans.result?.length }} vans</span
+              >
+            </span>
+          </div>
+          <div class="flex flex-row items-center">
+            <span class="font-normal text-2xl text-gray-700 0 mb-5">
+              Available:
+              <span class="text-3xl font-bold text-lightblack">
+                {{ availableVans }}</span
+              >
+            </span>
+          </div>
+
+          <div class="flex flex-row items-center">
+            <span class="font-normal text-2xl text-gray-700 0 mb-5">
+              Rented:
+              <span class="text-3xl font-bold text-lightblack">
+                {{ rentedVans }}</span
+              >
+            </span>
+          </div>
         </div>
       </div>
       <!-- HOST VANS LIST -->

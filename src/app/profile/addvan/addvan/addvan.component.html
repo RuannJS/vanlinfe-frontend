@@ -56,13 +56,14 @@
         Description</label
       >
 
-      <input
+      <textarea
         formControlName="description"
         placeholder="Lorem, ipsum dolor sit amet consectetur adipisicing elit."
         type="text"
         id="description"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
-      />
+        rows="4"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-orange-500 focus:border-orange-500"
+      ></textarea>
     </div>
 
     <div class="mb-5">
@@ -161,6 +162,8 @@
       />
     </svg>
     <span class="sr-only">Info</span>
-    <div><span class="font-medium">Error alert!</span> Please try again.</div>
+    <div>
+      <span class="font-medium">Error alert!</span> {{ this.errorMessage }}
+    </div>
   </div>
 </div>

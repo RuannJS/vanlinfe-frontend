@@ -1,24 +1,83 @@
 <section class="bg-secondary p-5">
-  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-    <span
-      *ngIf="email?.invalid && (email?.dirty || email?.touched || isSubmitted)"
-      >Invalid email</span
+  <h5
+    class="my-14 text-5xl text-lightblack font-black tracking-tight text-center"
+  >
+    Sign in to #VANLIFE
+  </h5>
+
+  <form
+    class="max-w-sm mx-auto mb-56 md:mb-80"
+    [formGroup]="signInForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="mb-10">
+      <span
+        class="text-red-700 font-black text-lg tracking-tighter"
+        *ngIf="
+          email?.invalid && (email?.dirty || email?.touched || isSubmitted)
+        "
+        >Invalid email</span
+      >
+      <label class="block mb-2 text-lg font-medium text-gray-900" for="email">
+        Email
+      </label>
+      <input
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
+        id="email"
+        formControlName="email"
+        type="text"
+      />
+    </div>
+
+    <div class="mb-10">
+      <span
+        class="text-red-700 font-black text-lg tracking-tighter"
+        *ngIf="
+          password?.invalid &&
+          (password?.dirty || password?.touched || isSubmitted)
+        "
+        >Invalid password</span
+      >
+      <label
+        class="block mb-2 text-lg font-medium text-gray-900"
+        for="password"
+      >
+        Password
+      </label>
+      <input
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5"
+        id="password"
+        formControlName="password"
+        type="password"
+      />
+    </div>
+
+    <div *ngIf="backendError" class="mb-10">
+      <span class="text-red-700 font-black tracking-tighter text-sm"
+        >Oops!
+
+        <span class="text-base font-bold"
+          >Invalid credentials, please try again.</span
+        >
+      </span>
+    </div>
+
+    <button
+      type="submit"
+      class="text-white bg-cta hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
     >
-    <label for="email"> Email </label>
-    <input id="email" formControlName="email" type="text" />
-
-    <br />
-
-    <span
-      *ngIf="
-        password?.invalid &&
-        (password?.dirty || password?.touched || isSubmitted)
-      "
-      >Invalid password</span
-    >
-    <label for="password">Password</label>
-    <input formControlName="password" type="password" />
-
-    <button type="submit">submit</button>
+      Submit
+    </button>
   </form>
+
+  <div class="text-center">
+    <h5 class="text-sm font-semibold text-lightblack tracking-tighter">
+      Doesn't have an account yet?
+      <span
+        routerLink="/signup"
+        class="font-black text-base text-black hover:underline cursor-pointer"
+        >Click here to signup</span
+      >
+    </h5>
+  </div>
 </section>

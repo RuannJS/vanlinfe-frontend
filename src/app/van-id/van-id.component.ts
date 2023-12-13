@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, tap, map, startWith } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, map, startWith } from 'rxjs';
 import { VanService } from '../services/van/van.service';
 import { Van } from '../util/van.interface';
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-van-id',
@@ -20,6 +21,10 @@ export class VanIDComponent implements OnInit {
   vanID!: string | null;
   token!: string | null;
 
+  isLoading = false;
+  backendError = false;
+  isRented = false;
+
   vanDetails$!: Observable<{ isLoading: boolean; result: Van | undefined }>;
 
   ngOnInit(): void {
@@ -35,7 +40,27 @@ export class VanIDComponent implements OnInit {
     }
   }
 
-  goBack() {
+  rentVan(van: Van | undefined): void {
+    this.isLoading = true;
+
+    if (this.token !== null && van?.id) {
+      this.service.rentVan(this.token, van.id).subscribe({
+        error: (err: HttpErrorResponse) => {
+          this.isLoading = false;
+          this.backendError = true;
+        },
+        next: (value) => {
+          this.isRented = true;
+          this.isLoading = false;
+          setTimeout(() => {
+            this.location.historyGo(0);
+          }, 4000);
+        },
+      });
+    }
+  }
+
+  goBack(): void {
     this.location.historyGo(-1);
   }
 }

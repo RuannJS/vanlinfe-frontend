@@ -5,6 +5,7 @@ import { Van } from 'src/app/util/van.interface';
 import { Modal, ModalOptions } from 'flowbite';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-hostvans',
@@ -73,6 +74,30 @@ export class HostvansComponent implements OnInit {
     }
   }
 
+  releaseError = false;
+  wasReleased = false;
+  releaseLoading = false;
+
+  releaseVan(vanId: string) {
+    this.releaseLoading = true;
+    if (this.token !== null) {
+      this.vanService.releaseVan(vanId, this.token).subscribe({
+        error: (err) => {
+          this.releaseLoading = false;
+          this.releaseError = true;
+        },
+        next: (value) => {
+          this.releaseLoading = false;
+          this.wasReleased = true;
+
+          setTimeout(() => {
+            this.location.historyGo(0);
+          }, 2000);
+        },
+      });
+    }
+  }
+
   // TOGGLE EDIT MODAL
 
   toggleModal(element: HTMLDivElement, van?: Van) {
@@ -115,23 +140,18 @@ export class HostvansComponent implements OnInit {
           this.price?.value,
           this.description?.value
         )
-        .subscribe((value) => {
-          if (value) {
-            this.wasUpdated = true;
-
-            setTimeout(() => {
-              this.location.historyGo(0);
-            }, 1500);
-          } else {
+        .subscribe({
+          error: (err: HttpErrorResponse) => {
             this.updateError = true;
+          },
+          next: (value) => {
+            this.wasUpdated = true;
             setTimeout(() => {
               this.location.historyGo(0);
-            }, 1500);
-          }
+            }, 2000);
+          },
         });
     }
-
-    return;
   }
 
   // DELETE MODAL
@@ -169,23 +189,18 @@ export class HostvansComponent implements OnInit {
 
   onDelete() {
     if (this.token !== null) {
-      this.vanService
-        .deleteVan(this.selectedVan.id, this.token)
-        .subscribe((value) => {
-          if (value) {
-            this.wasDeleted = true;
+      this.vanService.deleteVan(this.selectedVan.id, this.token).subscribe({
+        error: (err: HttpErrorResponse) => {
+          this.deleteError = true;
+        },
+        next: (value) => {
+          this.wasDeleted = true;
 
-            setTimeout(() => {
-              this.location.historyGo(0);
-            }, 1500);
-          } else {
-            this.deleteError = true;
-
-            setTimeout(() => {
-              this.location.historyGo(0);
-            }, 1500);
-          }
-        });
+          setTimeout(() => {
+            this.location.historyGo(0);
+          }, 2000);
+        },
+      });
     }
   }
 }

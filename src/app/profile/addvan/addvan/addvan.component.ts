@@ -1,4 +1,5 @@
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { VanService } from 'src/app/services/van/van.service';
@@ -40,6 +41,7 @@ export class AddvanComponent implements OnInit {
 
   wasCreated = false;
   createError = false;
+  errorMessage!: string;
 
   ngOnInit(): void {
     this.token = localStorage.getItem('token');
@@ -51,12 +53,15 @@ export class AddvanComponent implements OnInit {
     const reader = new FileReader();
 
     reader.readAsDataURL(vanImage);
+
     reader.onload = (event: any) => {
       this.selectedImage = { isSelected: true, image: event.target.result };
     };
   }
 
   onSubmit() {
+    this.createError = false;
+    this.wasCreated = false;
     this.isSubmitted = true;
 
     if (this.vanForm.valid && this.selectedImage.isSelected) {
@@ -70,23 +75,22 @@ export class AddvanComponent implements OnInit {
             this.type?.value,
             this.selectedImage.image
           )
-          .subscribe((value) => {
-            if (value) {
-              this.wasCreated = true;
-
-              setTimeout(() => {
-                this.location.historyGo(0);
-              }, 1500);
-            } else {
+          .subscribe({
+            error: (err: HttpErrorResponse) => {
               this.createError = true;
+
+              this.errorMessage = 'Oops! There was an error, try again!';
+
+              if (err.status === 413) this.errorMessage = 'Image is too large!';
+            },
+            next: (value) => {
+              this.wasCreated = true;
               setTimeout(() => {
                 this.location.historyGo(0);
               }, 1500);
-            }
+            },
           });
       }
-    } else {
-      return;
     }
   }
 }

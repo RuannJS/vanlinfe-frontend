@@ -18,6 +18,7 @@ import { PasswordPipe } from './util/pipes/password/password.pipe';
 import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.component';
 import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
 import { AddvanComponent } from './profile/addvan/addvan/addvan.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AddvanComponent } from './profile/addvan/addvan/addvan.component';
     DashboardComponent,
     HostvansComponent,
     AddvanComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,

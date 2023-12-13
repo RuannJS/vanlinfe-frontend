@@ -19,6 +19,9 @@ export class DashboardComponent implements OnInit {
   userInfo$!: Observable<{ isLoading: boolean; result: User | undefined }>;
   hostVans$!: Observable<{ isLoading: boolean; result: Van[] | undefined }>;
 
+  rentedVans!: number;
+  availableVans!: number;
+
   token!: string | null;
 
   ngOnInit(): void {
@@ -34,6 +37,20 @@ export class DashboardComponent implements OnInit {
         map((value) => ({ isLoading: false, result: value })),
         startWith({ isLoading: true, result: undefined })
       );
+
+      // Available VANS
+
+      this.vanService
+        .listHostVans(this.token)
+        .pipe(map((value) => value.filter((van) => van.isRented === false)))
+        .subscribe((value) => (this.availableVans = value.length));
+
+      // Rented Vans
+
+      this.vanService
+        .listHostVans(this.token)
+        .pipe(map((value) => value.filter((van) => van.isRented === true)))
+        .subscribe((value) => (this.rentedVans = value.length));
     }
   }
 }

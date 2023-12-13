@@ -35,6 +35,22 @@ export class VanService {
     });
   }
 
+  private RENT_VAN_URL = 'http://localhost:3000/vans/van/rent/';
+
+  rentVan(token: string, vanId: string): Observable<void> {
+    return this.http.put<void>(`${this.RENT_VAN_URL}${vanId}`, null, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+  }
+
+  private RELEASE_VAN_URL = 'http://localhost:3000/vans/van/release/';
+
+  releaseVan(vanId: string, token: string): Observable<void> {
+    return this.http.put<void>(`${this.RELEASE_VAN_URL}${vanId}`, null, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+  }
+
   private ADD_VAN_URL = 'http://localhost:3000/vans/add';
 
   addVan(

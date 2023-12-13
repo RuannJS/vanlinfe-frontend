@@ -14,4 +14,5 @@ export interface Van {
     name: string;
   };
   imageUrl: string;
+  isRented: boolean;
 }

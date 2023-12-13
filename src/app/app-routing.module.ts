@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './profile/dashboard/dashboard/dashboard.component';
 import { HostvansComponent } from './profile/hostvans/hostvans/hostvans.component';
 import { AddvanComponent } from './profile/addvan/addvan/addvan.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
     path: 'signin',
     component: SigninComponent,
     title: 'Sign in to #VanLife',
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    title: 'Sign up to #VanLife',
   },
   {
     path: 'profile',
